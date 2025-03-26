@@ -3,7 +3,7 @@ name: Update News Daily
 on:
   schedule:
     - cron: "*/2 * * * *"  # This runs at the start of every hour
-  workflow_dispatch:  # Allows manual trigger
+  
 
 jobs:
   update-news:
@@ -15,7 +15,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.x'
+          python-version: '3.11'
 
       - name: Install dependencies
         run: pip install -r requirements.txt || true
