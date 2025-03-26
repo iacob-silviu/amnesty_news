@@ -2,7 +2,7 @@ name: Update News Daily
 
 on:
   schedule:
-    - cron: "0 * * * *"  # This runs at the start of every hour
+    - cron: "/5 * * * *"  # This runs at the start of every hour
   workflow_dispatch:  # Allows manual trigger
 
 jobs:
