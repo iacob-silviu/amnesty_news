@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News Aggregator</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; padding: 20px; }
+        .news-container { max-width: 800px; margin: auto; }
+        .news-item { border-bottom: 1px solid #ddd; padding: 10px 0; }
+        .news-item h2 { margin: 0; font-size: 20px; }
+        .news-item p { margin: 5px 0; }
+        .news-item a { text-decoration: none; color: blue; }
+    </style>
+</head>
+<body>
+    <div class="news-container" id="newsContainer"></div>
+
+    <script>
+        function truncateText(text, sentenceCount) {
+            return text.split(".").slice(0, sentenceCount).join(".") + '.';
+        }
+
+        function loadNews() {
+            fetch('news.json')
+                .then(response => response.json())
+                .then(newsData => {
+                    newsData.sort((a, b) => new Date(b.release_date) - new Date(a.release_date));
+                    const container = document.getElementById("newsContainer");
+                    newsData.forEach(news => {
+                        const newsItem = document.createElement("div");
+                        newsItem.classList.add("news-item");
+                        newsItem.innerHTML = `
+                            <h2><a href="${news.url}" target="_blank">${news.title}</a></h2>
+                            <p><strong>Date:</strong> ${news.release_date}</p>
+                            <p>${truncateText(news.article, 3)}</p>
+                        `;
+                        container.appendChild(newsItem);
+                    });
+                })
+                .catch(error => console.error('Error loading news:', error));
+        }
+
+        loadNews();
+    </script>
+</body>
+</html>
